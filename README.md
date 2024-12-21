@@ -4,9 +4,11 @@
 Notes:
 
 install lib:
+
 pip install python-telegram-bot
 
-run .py
+run .py:
+
 C:\Users\LENOVO\AppData\Local\Programs\Python\Python313\python.exe main.py
 
 
