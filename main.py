@@ -36,7 +36,7 @@ def handle_response(text:str) -> str:
 
 #Messages
 
-async def handle_messages(update:Update, context: ContextTypes.DEFAULT_TYPE):
+async def handle_message(update:Update, context: ContextTypes.DEFAULT_TYPE):
 	message_type:str=update.message.chat.type
 	text: str=update.message.text
 
@@ -49,7 +49,7 @@ async def handle_messages(update:Update, context: ContextTypes.DEFAULT_TYPE):
 		else:
 			return
 	else:
-		response:str=handle_response(new_text)
+		response:str=handle_response(text)
 
 	print('Bot: ',response)
 
@@ -63,3 +63,21 @@ async def error(update:Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == '__main__':
 	app = Application.builder().token(TOKEN).build()
+
+	print('Starting banana bot...')
+
+	# Commands
+	app.add_handler(CommandHandler("start", start_command))
+	app.add_handler(CommandHandler("help", help_command))
+	app.add_handler(CommandHandler("custom", custom_command))
+
+	# Messages
+	app.add_handler(MessageHandler(filters.TEXT, handle_message))
+
+
+	# Errors 
+	app.add_error_handler(error)
+
+	#Polls the bot
+	print("Polling...")
+	app.run_polling(poll_interval=3)
